@@ -1,4 +1,4 @@
-Random-AD
+### Random-AD ###
 
 Powershell script made by me to automate mass-creation of simple user accounts in an AD environment
 
