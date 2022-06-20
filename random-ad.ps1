@@ -9,6 +9,7 @@ function Get-Password {
     $PasswordList = Get-Content passwords.txt
     return $(Get-Random -InputObject $PasswordList)
 }
+
 function Get-Department {
     # Pulls a random department name from provided departments.txt and returns it
     $DepartmentList = Get-Content departments.txt
@@ -28,10 +29,12 @@ function New-User {
     Property: Print
         Print the generated user info to console (bool)
         Default: False
+
     Property: Commit
         Whether or not to actually create user in AD (mostly for testing in a non-AD enabled environment)
         Default: False
     #> 
+
     [CmdletBinding()]
 	param(
 		[Parameter()] [string] $Amount = 1,
@@ -45,6 +48,7 @@ function New-User {
         # Account variables
         $FullName = New-Name
         $FirstName, $LastName = $FullName.Split()
+        # Generate random ID to append to SamAccountName just in case any names are duplicate (probably unnecessary)
         $RandomID = Get-Random -Minimum 1 -Maximum 999
         $SamAccountName = "$FirstName$LastName$RandomID"
         $UPN = "$SamAccountName@$CompanyName.com"
@@ -72,11 +76,10 @@ function New-User {
         }
 
         # Do the deed if Commit property is True
-        # If you wanted to output to a file or something, you could do it here by just replacing New-ADUser command
         if ($Commit -eq $True) {
+             # If you wanted to output to a file or something, you could do it here by just replacing New-ADUser command
             New-ADUser $User
         }
-
     }
 }
 
