@@ -51,7 +51,7 @@ function New-User {
         $Password = Get-Password
         $Department = Get-Department
 
-        # Dump account variables into a new object
+        # Dump account variables into a new PSObject
         $User = New-Object -TypeName PSObject
         $d = [ordered]@{`
             Name=$FullName;`
