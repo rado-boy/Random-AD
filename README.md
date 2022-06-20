@@ -4,7 +4,7 @@ Powershell script made by me to automate mass-creation of simple user accounts i
 
 If ran without editing script block, it won't do anything besides print generated info for one user in a table; run New-User with "Commit" property to create the account in AD
 
-Just in case it is not obviouos, if you want the script to do anything besides generate user info it must be ran under a domain user with permission to create new accounts
+Just in case it is not obviouos, if you want the script to do anything besides generate user info it must be ran under a domain user with permission to create new accounts; you may also first need to run ``import-module ActiveDirectory``
 
 NOTE: This script has NOT been tested in an AD environment (yet)
 
