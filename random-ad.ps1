@@ -38,7 +38,7 @@ function New-User {
     [CmdletBinding()]
 	param(
 		[Parameter()] [string] $Amount = 1,
-        [Parameter()] [string] $CompanyName = 'example',
+        [Parameter()] [string] $DomainName = 'example',
         [Parameter()] [bool] $Print = $False,
         [Parameter()] [bool] $Commit = $False
 	)
@@ -51,7 +51,7 @@ function New-User {
         # Generate random ID to append to SamAccountName just in case any names are duplicate (probably unnecessary)
         $RandomID = Get-Random -Minimum 1 -Maximum 999
         $SamAccountName = "$FirstName$LastName$RandomID"
-        $UPN = "$SamAccountName@$CompanyName.com"
+        $UPN = "$SamAccountName@$DomainName.com"
         $Password = Get-Password
         $Department = Get-Department
 
@@ -63,7 +63,7 @@ function New-User {
             Surname=$LastName;
             SamAccountName=$SamAccountName;
             UserPrincipalName=$UPN;
-            Path="OU=Users,DC=$CompanyName,DC=com";
+            Path="OU=Users,DC=$DomainName,DC=com";
             AccountPassword=$Password;
             Department=$Department;
             Enabled=$True
@@ -81,6 +81,7 @@ function New-User {
             New-ADUser $User
         }
     }
+    Write-Host "Created $Amount user(s) in $DomainName domain"
 }
 
 #Script Block
