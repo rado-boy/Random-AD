@@ -57,18 +57,18 @@ function New-User {
 
         # Dump account variables into a new PSObject
         $User = New-Object -TypeName PSObject
-        $d = [ordered]@{`
-            Name=$FullName;`
-            GivenName=$FirstName;`
-            Surname=$LastName;`
-            SamAccountName=$SamAccountName;`
-            UserPrincipalName=$UPN;`
-            Path="OU=Users,DC=$CompanyName,DC=com";`
-            AccountPassword=$Password;`
-            Department=$Department;`
-            Enabled=$True`
+        $UserProperties = [ordered]@{
+            Name=$FullName;
+            GivenName=$FirstName;
+            Surname=$LastName;
+            SamAccountName=$SamAccountName;
+            UserPrincipalName=$UPN;
+            Path="OU=Users,DC=$CompanyName,DC=com";
+            AccountPassword=$Password;
+            Department=$Department;
+            Enabled=$True
         }
-        $User | Add-Member -NotePropertyMembers $d -TypeName User
+        $User | Add-Member -NotePropertyMembers $UserProperties -TypeName User
 
         # Print output as table if Print property is True
         if ($Print -eq $True) {
