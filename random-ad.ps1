@@ -1,21 +1,45 @@
 function New-Name {
     # Pulls a random full name from pseudoramdom.name and returns it
-    $NameRequest = Invoke-WebRequest pseudorandom.name 
+    $NameRequest = Invoke-WebRequest pseudorandom.name
+    # Error block
+    if (!$NameRequest) {
+        Stop-IfNullValue -FunctionName $MyInvocation.MyCommand
+    }
+
     return $($NameRequest.ParsedHtml.getElementsByTagName('h1')).innertext 
 }
 
 function Get-Password {
     # Pulls a random password from provided passwords.txt and returns it
     $PasswordList = Get-Content passwords.txt
+    # Error block
+    if (!$PasswordList) {
+        Stop-IfNullValue -FunctionName $MyInvocation.MyCommand
+    }
+
     return $(Get-Random -InputObject $PasswordList)
 }
 
 function Get-Department {
     # Pulls a random department name from provided departments.txt and returns it
     $DepartmentList = Get-Content departments.txt
+    # Error block
+    if (!$DepartmentList) {
+        Stop-IfNullValue -FunctionName $MyInvocation.MyCommand
+    }
+
     return $(Get-Random -InputObject $DepartmentList)
 }
 
+function Stop-IfNullValue {
+    [CmdletBinding()]
+	param(
+		[Parameter()] [string] $FunctionName
+    )
+
+    Write-Host "Null value returned from function ""$FunctionName"" - Exiting..."
+    exit
+}
 function New-User {
     <# Generates all needed information for a new user account and creates it in AD
     Property: Amount
